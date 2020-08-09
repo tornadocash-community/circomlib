@@ -105,8 +105,7 @@ function signPoseidon(prv, msg) {
     let r = bigInt.leBuff2int(rBuff);
     r = r.mod(babyJub.subOrder);
     const R8 = babyJub.mulPointEscalar(babyJub.Base8, r);
-    const hash = poseidon.createHash(6, 8, 57);
-    const hm = hash([R8[0], R8[1], A[0], A[1], msg]);
+    const hm = poseidon([R8[0], R8[1], A[0], A[1], msg]);
     const S = r.add(hm.mul(s)).mod(babyJub.subOrder);
     return {
         R8: R8,
@@ -173,8 +172,7 @@ function verifyPoseidon(msg, sig, A) {
     if (!babyJub.inCurve(A)) return false;
     if (sig.S>= babyJub.subOrder) return false;
 
-    const hash = poseidon.createHash(6, 8, 57);
-    const hm = hash([sig.R8[0], sig.R8[1], A[0], A[1], msg]);
+    const hm = poseidon([sig.R8[0], sig.R8[1], A[0], A[1], msg]);
 
     const Pleft = babyJub.mulPointEscalar(babyJub.Base8, sig.S);
     let Pright = babyJub.mulPointEscalar(A, hm.mul(bigInt("8")));

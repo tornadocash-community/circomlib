@@ -50,7 +50,7 @@ template EdDSAPoseidonVerifier() {
 
 // Calculate the h = H(R,A, msg)
 
-    component hash = Poseidon(5, 6, 8, 57);
+    component hash = Poseidon(5);
 
     hash.inputs[0] <== R8x;
     hash.inputs[1] <== R8y;
