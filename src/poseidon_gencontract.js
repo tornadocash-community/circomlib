@@ -3,7 +3,7 @@
 //
 
 const Contract = require("./evmasm");
-const { unstringifyBigInts } = require("ffjavascript").utils;
+const { unstringifyBigInts } = require("snarkjs");
 
 const { C:K, M } = unstringifyBigInts(require("./poseidon_constants.json"));
 
