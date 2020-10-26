@@ -14,6 +14,8 @@ describe("Poseidon Smart contract test", function () {
     let poseidon4;
     let accounts;
     this.timeout(100000);
+    let C2
+    let C4
 
     before(async () => {
         web3 = new Web3(ganache.provider(), null, { transactionConfirmationBlocks: 1 });
@@ -21,15 +23,17 @@ describe("Poseidon Smart contract test", function () {
     });
 
     it("Should deploy the contract", async () => {
-        const C = new web3.eth.Contract(poseidonGenContract.abi);
-
-        poseidon2 = await C.deploy({
+        
+        C2 = new web3.eth.Contract(poseidonGenContract.generateABI(2));
+        poseidon2 = await C2.deploy({
             data: poseidonGenContract.createCode(2)
         }).send({
             gas: 5000000,
             from: accounts[0]
         });
-        poseidon4 = await C.deploy({
+        
+        C4 = new web3.eth.Contract(poseidonGenContract.generateABI(4));
+        poseidon4 = await C4.deploy({
             data: poseidonGenContract.createCode(4)
         }).send({
             gas: 5000000,
@@ -37,8 +41,7 @@ describe("Poseidon Smart contract test", function () {
         });
     });
 
-    it("Shold calculate the poseidon correctly for 2 inputs", async () => {
-
+    it("Should calculate the poseidon correctly for 2 inputs", async () => {
         const res = await poseidon2.methods.poseidon([1, 2]).call();
 
         // console.log("Cir: " + bigInt(res.toString(16)).toString(16));
@@ -48,7 +51,7 @@ describe("Poseidon Smart contract test", function () {
 
         assert.equal(res.toString(), res2.toString());
     });
-    it("Shold calculate the poseidon correctly for 4 inputs", async () => {
+    it("Should calculate the poseidon correctly for 4 inputs", async () => {
 
         const res = await poseidon4.methods.poseidon([1, 2, 3, 4]).call();
 
