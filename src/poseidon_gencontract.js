@@ -116,7 +116,7 @@ function createCode(nInputs) {
     // We ignore the pointer and the length and just load t values to the state
     // (Stack positions 0-{t-1}) If the array is shorter, we just set zeros.
     for (let i=0; i<t; i++) {
-        C.push(0x44+(0x20*(5-i)));
+        C.push(0x44+(0x20*(t-1-i)));
         C.calldataload();
     }
 
