@@ -9,9 +9,12 @@ const Web3Utils = require("web3-utils");
 const { C:K, M } = unstringifyBigInts(require("./poseidon_constants.json"));
 
 const N_ROUNDS_F = 8;
-const N_ROUNDS_P = [56, 57, 56, 60, 60, 63, 64, 63];
+const N_ROUNDS_P = 35;
 
 function toHex256(a) {
+    if (typeof a === "string" && a.startsWith("0x")) {
+        return a;
+    }
     let S = a.toString(16);
     while (S.length < 64) S="0"+S;
     return "0x" + S;
@@ -19,10 +22,10 @@ function toHex256(a) {
 
 function createCode(nInputs) {
 
-    if (( nInputs<1) || (nInputs>8)) throw new Error("Invalid number of inputs. Must be 1<=nInputs<=8");
+    if (( nInputs<1) || (nInputs>4)) throw new Error("Invalid number of inputs. Must be 1<=nInputs<=8");
     const t = nInputs + 1;
     const nRoundsF = N_ROUNDS_F;
-    const nRoundsP = N_ROUNDS_P[t - 2];
+    const nRoundsP = N_ROUNDS_P;
 
     const C = new Contract();
 
