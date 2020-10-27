@@ -14,8 +14,8 @@ describe("Poseidon Smart contract test", function () {
     let poseidon4;
     let accounts;
     this.timeout(100000);
-    let C2
-    let C4
+    let C2;
+    let C4;
 
     before(async () => {
         web3 = new Web3(ganache.provider(), null, { transactionConfirmationBlocks: 1 });
